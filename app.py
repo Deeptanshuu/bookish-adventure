@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Dictionary to store the leaderboard
 leaderboard = defaultdict(int)
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/github', methods=['POST'])
 def github_webhook():
     if request.method == 'POST':
         event_type = request.headers.get('X-GitHub-Event')
