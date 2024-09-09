@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import PropTypes from 'prop-types';
+
 
 const HacktoberfestLeaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -23,6 +25,12 @@ const HacktoberfestLeaderboard = () => {
     };
   }, []);
 
+  LeaderboardRow.propTypes = {
+    rank: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+  };
+  
   const LeaderboardRow = ({ rank, name, score }) => (
     <tr className="border-b">
       <td className="py-2 px-4 font-medium">{rank}</td>
