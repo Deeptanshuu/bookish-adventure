@@ -26,11 +26,6 @@ def github_webhook():
     else:
         return jsonify({'status': 'failure'}), 400
 
-@app.route('/leaderboard', methods=['GET'])
-def get_leaderboard():
-    sorted_leaderboard = dict(sorted(leaderboard.items(), key=lambda item: item[1], reverse=True))
-    return jsonify(sorted_leaderboard)
-
 def emit_leaderboard():
     sorted_leaderboard = dict(sorted(leaderboard.items(), key=lambda item: item[1], reverse=True))
     socketio.emit('leaderboard_update', sorted_leaderboard)
