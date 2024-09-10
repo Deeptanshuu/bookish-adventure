@@ -29,7 +29,7 @@ app.get('/api/', (req, res) => {
 
 
 // Handle incoming GitHub webhooks
-app.post('/api/webhook', (req, res) => {
+app.post('/api/github', (req, res) => {
     const event = req.headers['x-github-event'];
     const payload = req.body;
   
