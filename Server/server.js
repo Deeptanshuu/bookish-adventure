@@ -100,6 +100,15 @@ async function updateTeamPoints(username, difficulty, points) {
   );
 }
 
+// Function to disqualify a team
+async function disqualifyTeam(username) {
+  await db.collection('Teams').updateOne(
+    { "github_username": username },
+    { $set: { "disqualified": true } }
+  );
+}
+
+
   
 
 // Start the server
