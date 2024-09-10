@@ -35,7 +35,7 @@ app.post('/api/github', async (req, res) => {
     const payload = req.body;
 
     console.log(`Received GitHub event: ${event}`);
-    console.log(payload);
+    //console.log(payload);
 
     if (event === 'pull_request') {
       const action = payload.action;
