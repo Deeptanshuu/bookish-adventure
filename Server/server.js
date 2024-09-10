@@ -30,35 +30,41 @@ app.get('/api/', (req, res) => {
 
 // Handle incoming GitHub webhooks
 app.post('/api/github', async (req, res) => {
-  const event = req.headers['x-github-event']; // GitHub event type
-  const payload = req.body; // GitHub payload
+  try {
+    const event = req.headers['x-github-event'];
+    const payload = req.body;
 
-  console.log(`Received GitHub event: ${event}`);
-  console.log(payload);
+    console.log(`Received GitHub event: ${event}`);
+    console.log(payload);
 
-  if (event === 'pull_request') {
-    const action = payload.action; // Action type (e.g., "opened", "closed")
-    const isMerged = payload.pull_request.merged; // True if the PR is merged
-    const labels = payload.pull_request.labels; // PR labels
-    const prUser = payload.pull_request.user.login; // GitHub username of the PR author
+    if (event === 'pull_request') {
+      const action = payload.action;
+      const isMerged = payload.pull_request.merged;
+      const labels = payload.pull_request.labels;
+      const prUser = payload.pull_request.user.login;
 
-    // Only process if the PR is closed and merged
-    if (action === 'closed' && isMerged) {
-      // Determine the difficulty and points based on labels
-      const { difficulty, points } = getDifficultyAndPoints(labels);
+      if (action === 'closed' && isMerged) {
+        const { difficulty, points } = getDifficultyAndPoints(labels);
+        const team = await getTeamByGithubUsername(prUser);
 
-      // Find the team by GitHub username
-      const team = await getTeamByGithubUsername(prUser);
-
-      if (team) {
-        // Update the team's points and solved problem count
-        await updateTeamPoints(team.github_username, difficulty, points);
+        if (team) {
+          if (!team.disqualified) {
+            await updateTeamPoints(team.github_username, difficulty, points);
+          } else {
+            console.log(`Team ${team.github_username} is disqualified and will not receive points.`);
+          }
+        } else {
+          console.warn(`Team not found for GitHub username: ${prUser}`);
+        }
       }
     }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error handling GitHub webhook:', error);
+    res.sendStatus(500);
   }
-
-  res.sendStatus(200); // Respond OK
 });
+
 
 // Determine difficulty and points based on PR labels
 function getDifficultyAndPoints(labels) {
