@@ -49,6 +49,7 @@ app.post('/api/github', async (req, res) => {
       }
     }
     res.sendStatus(200);
+    
   } catch (error) {
     console.error('Error handling GitHub webhook:', error);
     res.sendStatus(500);
