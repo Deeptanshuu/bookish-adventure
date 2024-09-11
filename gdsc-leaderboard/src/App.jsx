@@ -23,9 +23,8 @@ import './App.css';
 const HacktoberfestLeaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const bgColor = useColorModeValue('white', 'gray.800');
-  const headerTextColor = useColorModeValue('white', 'gray.800');
-  const itemBgColor = useColorModeValue('gray.100', 'gray.700');
-  const hoverBgColor = useColorModeValue('gray.100', 'gray.600');
+  const itemBgColor = useColorModeValue('gray.100', 'gray.800');
+  const hoverBgColor = useColorModeValue('gray.100', 'gray.500');
 
   useEffect(() => {
     const socket = io('http://localhost:5000');
@@ -66,24 +65,25 @@ const HacktoberfestLeaderboard = () => {
     })();
   
     return (
-      <AccordionItem border="none" mb={4}>
+      <AccordionItem mb={2} border={0}>
         <AccordionButton 
-          _expanded={{ bg: itemBgColor, color: 'orange.500' }} 
+          _expanded={{ bg: itemBgColor, color: 'orange.500'}} 
           _hover={{ bg: hoverBgColor }}
-          borderRadius="none"
+          borderRadius="base"
+          padding={3}
         >
           <Flex flex="1" justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
               <Badge
-                fontSize="md"
+                fontSize="xl"
                 mr={3}
                 colorScheme={badgeColor}
-                bg={badgeColor === 'blue' ? 'blue.100' : 'transparent'}
-                color={badgeColor === 'blue' ? 'blue.500' : badgeColor}
+                bg={badgeColor === 'blue' ? 'blue.100' : `${badgeColor}.100`}
+                color={badgeColor === 'blue' ? 'blue.500' :`${badgeColor}.500`}
               >
                 #{rank}
               </Badge>
-              <Text fontSize="xl" fontWeight="semibold">{name}</Text>
+              <Text fontSize="xl" fontWeight="semibold" color='black' >{name}</Text>
             </Flex>
             <Flex alignItems="center">
               <AvatarGroup size="sm" max={4} mr={4}>
@@ -91,7 +91,7 @@ const HacktoberfestLeaderboard = () => {
                   <Avatar name={member.name} key={index} />
                 ))}
               </AvatarGroup>
-              <Text fontSize="xl" fontWeight="bold" color="blue.500">Score: {score}</Text>
+              <Text fontSize="xl" fontWeight="semibold" color='black' ml={5} mr={8}>Score: {score}  📈</Text>
             </Flex>
           </Flex>
           <AccordionIcon />
@@ -112,15 +112,15 @@ const HacktoberfestLeaderboard = () => {
             <Box>
               <Text fontSize="lg" fontWeight="bold" mb={2}>Problems Solved:</Text>
               <SimpleGrid columns={3} spacing={4}>
-                <Box bg="green.100" p={2} borderRadius="md" textAlign="center">
+                <Box bg="green.100" p={2} borderRadius="md" border='1px' borderColor='green.500' textAlign="center">
                   <Text fontSize="sm" fontWeight="semibold">Easy</Text>
                   <Text fontSize="xl" fontWeight="bold">{easySolved}</Text>
                 </Box>
-                <Box bg="yellow.100" p={2} borderRadius="md" textAlign="center">
+                <Box bg="yellow.100" p={2} borderRadius="md" border='1px' borderColor='yellow.500' textAlign="center">
                   <Text fontSize="sm" fontWeight="semibold">Medium</Text>
                   <Text fontSize="xl" fontWeight="bold">{mediumSolved}</Text>
                 </Box>
-                <Box bg="red.100" p={2} borderRadius="md" textAlign="center">
+                <Box bg="red.100" p={2} borderRadius="md" border='1px' borderColor='red.500' textAlign="center">
                   <Text fontSize="sm" fontWeight="semibold">Hard</Text>
                   <Text fontSize="xl" fontWeight="bold">{hardSolved}</Text>
                 </Box>
@@ -136,10 +136,19 @@ const HacktoberfestLeaderboard = () => {
   return (
     <div className='py-10'>
     <Box maxW="4xl" mx="auto" bg={bgColor} boxShadow="xl" borderRadius="base" overflow="hidden">
-      <Box px={6} py={6} bg="#ff6600" color={headerTextColor}>
-        <Text fontWeight="semibold" fontSize="4xl" textAlign="center">Hacktoberfest Leaderboard</Text>
-      </Box>
-      <Box p={6}>
+    <Box px={6} py={6} bg="white" color='white' border="3px solid #ff6600" borderRadius="base">
+      <Text 
+        as="h1"
+        fontWeight="semibold" 
+        fontSize="4xl" 
+        textAlign="center"
+        textShadow="5px 5px 0 #ff6600, -1px -1px 0 #ff6600, 1px -1px 0 #ff6600, -1px 1px 0 #ff6600"
+      >
+        Hacktoberfest Leaderboard
+      </Text>
+    </Box>
+
+      <Box p={8}>
         <Accordion allowToggle>
           {leaderboard.map((participant, index) => (
             <LeaderboardItem
