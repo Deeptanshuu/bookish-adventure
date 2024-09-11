@@ -15,7 +15,6 @@ async function handleGithubEvent(req, res) {
       const prUser = payload.pull_request.user.login;
 
       if (action === 'closed' && isMerged) {
-        // No need to match PR body for issues
         const { difficulty, points } = getDifficultyAndPoints(labels);
         console.log(`Difficulty: ${difficulty}, Points: ${points}`);
         const team = await getTeamByGithubUsername(prUser);
