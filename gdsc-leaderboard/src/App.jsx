@@ -13,13 +13,16 @@ const HacktoberfestLeaderboard = () => {
     });
 
     socket.on('leaderboard_update', (data) => {
-      const sortedLeaderboard = Object.entries(data)
-        .map(([name, details]) => ({
-          name,
-          score: details.score,
-          avatarUrl: details.avatar_url,
-        }))
-        .sort((a, b) => b.score - a.score);
+      const sortedLeaderboard = data.map((team) => ({
+        name: team.team_name,
+        score: team.score,
+        teamMembers: team.team_members.map(member => member.name),
+        easySolved: team.problems_solved.easy || 0,
+        mediumSolved: team.problems_solved.medium || 0,
+        hardSolved: team.problems_solved.hard || 0,
+      }))
+      .sort((a, b) => b.score - a.score);
+      
       setLeaderboard(sortedLeaderboard);
     });
 
@@ -28,11 +31,15 @@ const HacktoberfestLeaderboard = () => {
     };
   }, []);
 
-  const LeaderboardRow = ({ rank, name, score, avatarUrl }) => (
+  const LeaderboardRow = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved }) => (
     <tr className="border-b">
       <td className="py-2 px-4 font-medium text-center">{rank}</td>
-      <td className="py-2 px-4 flex flex-row text-center items-center justify-center"><img src={avatarUrl} alt="Profile" className="w-8 h-8 rounded-full mx-4" />{name}</td>
+      <td className="py-2 px-4 text-center">{name}</td>
       <td className="py-2 px-4 text-center">{score}</td>
+      <td className="py-2 px-4 text-center">{teamMembers.join(', ')}</td>
+      <td className="py-2 px-4 text-center">{easySolved}</td>
+      <td className="py-2 px-4 text-center">{mediumSolved}</td>
+      <td className="py-2 px-4 text-center">{hardSolved}</td>
     </tr>
   );
 
@@ -40,7 +47,10 @@ const HacktoberfestLeaderboard = () => {
     rank: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
-    avatarUrl: PropTypes.string.isRequired,
+    teamMembers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    easySolved: PropTypes.number.isRequired,
+    mediumSolved: PropTypes.number.isRequired,
+    hardSolved: PropTypes.number.isRequired,
   };
   
   return (
@@ -53,8 +63,12 @@ const HacktoberfestLeaderboard = () => {
           <thead>
             <tr className="bg-gray-100">
               <th className="py-2 px-4 text-center">Rank</th>
-              <th className="py-2 px-4 text-center">Name</th>
+              <th className="py-2 px-4 text-center">Team Name</th>
               <th className="py-2 px-4 text-center">Score</th>
+              <th className="py-2 px-4 text-center">Team Members</th>
+              <th className="py-2 px-4 text-center">Easy Solved</th>
+              <th className="py-2 px-4 text-center">Medium Solved</th>
+              <th className="py-2 px-4 text-center">Hard Solved</th>
             </tr>
           </thead>
           <tbody>
@@ -64,7 +78,10 @@ const HacktoberfestLeaderboard = () => {
                 rank={index + 1}
                 name={participant.name}
                 score={participant.score}
-                avatarUrl={participant.avatarUrl}
+                teamMembers={participant.teamMembers}
+                easySolved={participant.easySolved}
+                mediumSolved={participant.mediumSolved}
+                hardSolved={participant.hardSolved}
               />
             ))}
           </tbody>

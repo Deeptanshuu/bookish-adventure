@@ -1,5 +1,6 @@
 const { getTeamByGithubUsername, updateTeamPoints } = require('../services/teamService');
 const { getDifficultyAndPoints } = require('../utils/helpers');
+const { broadcastLeaderboard } = require('../services/websocketManager');
 
 async function handleGithubEvent(req, res) {
   try {
@@ -23,6 +24,11 @@ async function handleGithubEvent(req, res) {
           if (!team.disqualified) {
             console.log(`Updating points for team: ${team.github_username}`);
             await updateTeamPoints(team.github_username, difficulty, points);
+
+            // Fetch and broadcast the updated leaderboard
+            const leaderboard = await getLeaderboard();
+            broadcastLeaderboard(leaderboard);
+
           } else {
             console.log(`Team ${team.github_username} is disqualified and will not receive points.`);
           }
@@ -38,5 +44,6 @@ async function handleGithubEvent(req, res) {
     res.sendStatus(500);
   }
 }
+
 
 module.exports = { handleGithubEvent };
