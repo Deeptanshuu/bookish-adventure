@@ -15,6 +15,7 @@ connectToDatabase();
 
 // Routes
 app.post('/api/github', githubController.handleGithubEvent);
+app.post('/api/leaderboard', githubController.handleLeaderboardEvent);
 
 // Start server
 app.listen(port, () => {
