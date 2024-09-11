@@ -1,34 +1,33 @@
-const WebSocket = require('ws');
+const { Server } = require('socket.io'); // Import socket.io library
 
-let wss;
+let io;
 
 function initWebSocketServer(server) {
-  wss = new WebSocket.Server({ server });
-  
-  wss.on('connection', (ws) => {
+  io = new Server(server, {
+    cors: {
+      origin: '*', // Adjust the origin to your frontend URL
+      methods: ['GET', 'POST'],
+    },
+  });
+
+  io.on('connection', (socket) => {
     console.log('New WebSocket connection');
-    
-    ws.on('message', (message) => {
-      console.log(`Received message => ${message}`);
+
+    socket.on('disconnect', () => {
+      console.log('WebSocket disconnected');
     });
-    
-    ws.on('close', () => {
-      console.log('WebSocket connection closed');
-    });
-    
+
     // Optionally, send a welcome message to the new client
-    ws.send('Welcome to the WebSocket server');
+    socket.send('Welcome to the WebSocket server');
   });
 }
 
 function broadcastLeaderboard(leaderboard) {
-  if (wss) {
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(leaderboard));
-      }
-    });
+  if (io) {
+    io.emit('leaderboard_update', leaderboard); // Emit the leaderboard update to all connected clients
   }
 }
+
+
 
 module.exports = { initWebSocketServer, broadcastLeaderboard };
