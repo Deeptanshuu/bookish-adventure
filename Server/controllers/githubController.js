@@ -1,4 +1,5 @@
-const { getTeamByGithubUsername, updateTeamPoints } = require('../services/teamService');
+// controllers/githubController.js
+const { getTeamByGithubUsername, updateTeamPoints, getLeaderboard } = require('../services/teamService');
 const { getDifficultyAndPoints } = require('../utils/helpers');
 const { broadcastLeaderboard } = require('../services/websocketManager');
 
@@ -44,6 +45,5 @@ async function handleGithubEvent(req, res) {
     res.sendStatus(500);
   }
 }
-
 
 module.exports = { handleGithubEvent };

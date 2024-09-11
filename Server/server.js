@@ -33,9 +33,27 @@ connectToDatabase().then(() => {
     }
   }
 
+  // Define routes
+  app.post('/api/github', githubController.handleGithubEvent);
+  app.get('/api/leaderboard', leaderboardController.handleLeaderboardEvent);
+
   // Start HTTP server
   server.listen(port, () => {
     console.log(`Server running on port ${port}`);
-    updateAndBroadcastLeaderboard(); // Initial leaderboard broadcast
+    
+    // Initial leaderboard broadcast
+    updateAndBroadcastLeaderboard();
+    
+    // Set up interval to update and broadcast leaderboard every 1 minute (60000 ms)
+    const broadcastInterval = setInterval(updateAndBroadcastLeaderboard, 10000);
+    
+    // Handle server shutdown
+    process.on('SIGINT', () => {
+      clearInterval(broadcastInterval);
+      server.close(() => {
+        console.log('Server shut down gracefully');
+        process.exit(0);
+      });
+    });
   });
 });

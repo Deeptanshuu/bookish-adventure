@@ -1,4 +1,6 @@
-const { Server } = require('socket.io'); // Import socket.io library
+// services/websocketManager.js
+const { Server } = require('socket.io');
+const { getLeaderboard } = require('../services/teamService'); // Import getLeaderboard
 
 let io;
 
@@ -13,21 +15,26 @@ function initWebSocketServer(server) {
   io.on('connection', (socket) => {
     console.log('New WebSocket connection');
 
+    // Fetch and send the leaderboard to the newly connected client
+    getLeaderboard()
+      .then((leaderboard) => {
+        socket.emit('leaderboard_update', leaderboard);
+      })
+      .catch((error) => {
+        console.error('Error fetching leaderboard:', error);
+      });
+
     socket.on('disconnect', () => {
       console.log('WebSocket disconnected');
     });
-
-    // Optionally, send a welcome message to the new client
-    socket.send('Welcome to the WebSocket server');
   });
 }
 
+// Broadcast the leaderboard to all connected clients
 function broadcastLeaderboard(leaderboard) {
   if (io) {
-    io.emit('leaderboard_update', leaderboard); // Emit the leaderboard update to all connected clients
+    io.emit('leaderboard_update', leaderboard);
   }
 }
-
-
 
 module.exports = { initWebSocketServer, broadcastLeaderboard };
