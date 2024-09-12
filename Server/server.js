@@ -21,7 +21,7 @@ app.use(
   })
 );
 // Serve static files from the 'dist' directory
-app.use(express.static(path.join(__dirname, './dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // For any route, serve the index.html from the 'dist' folder
 app.get('/*', (req, res) => {
