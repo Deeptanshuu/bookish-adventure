@@ -22,4 +22,6 @@ function getDatabase() {
   return db;
 }
 
-module.exports = { connectToDatabase, getDatabase };
+
+
+module.exports = { connectToDatabase , getDatabase };

@@ -6,7 +6,7 @@ const http = require('http');
 const { connectToDatabase } = require('./config/database');
 const githubController = require('./controllers/githubController');
 const leaderboardController = require('./controllers/leaderboardController');
-const { initWebSocketServer, broadcastLeaderboard } = require('./services/websocketManager');
+const { initWebSocketServer, broadcastLeaderboard, setupChangeStream } = require('./services/websocketManager');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -22,6 +22,9 @@ connectToDatabase().then(() => {
 
   // Initialize Socket.IO server
   initWebSocketServer(server);
+
+  // Set up change stream in MONGODB
+  setupChangeStream();
 
   // Function to update leaderboard and broadcast it
   async function updateAndBroadcastLeaderboard() {
@@ -45,7 +48,7 @@ connectToDatabase().then(() => {
     updateAndBroadcastLeaderboard();
     
     // Set up interval to update and broadcast leaderboard every 1 minute (60000 ms)
-    const broadcastInterval = setInterval(updateAndBroadcastLeaderboard, 10000);
+    //const broadcastInterval = setInterval(updateAndBroadcastLeaderboard, 60000);
     
     // Handle server shutdown
     process.on('SIGINT', () => {

@@ -78,8 +78,8 @@ const HacktoberfestLeaderboard = () => {
                 fontSize="xl"
                 mr={3}
                 colorScheme={badgeColor}
-                bg={badgeColor === 'blue' ? 'blue.100' : `${badgeColor}.100`}
-                color={badgeColor === 'blue' ? 'blue.500' :`${badgeColor}.500`}
+                bg={badgeColor === 'blue' ? 'trasparent' : `${badgeColor}.100`}
+                color={badgeColor === 'blue' ? 'black' :`${badgeColor}.500`}
               >
                 #{rank}
               </Badge>
@@ -135,12 +135,12 @@ const HacktoberfestLeaderboard = () => {
 
   return (
     <div className='py-10'>
-    <Box maxW="4xl" mx="auto" bg={bgColor} boxShadow="xl" borderRadius="base" overflow="hidden">
-    <Box px={6} py={6} bg="white" color='white' border="3px solid #ff6600" borderRadius="base">
+    <Box maxW="4xl" mx="auto" bg={bgColor} boxShadow="20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)" border="3px solid #ff6600" borderRadius="lg" overflow="hidden">
+    <Box px={6} py={6} bg="white" color='white' borderBottom="3px solid #ff6600" borderRadius="none">
       <Text 
         as="h1"
-        fontWeight="semibold" 
-        fontSize="4xl" 
+        fontWeight="bold" 
+        fontSize="5xl" 
         textAlign="center"
         textShadow="5px 5px 0 #ff6600, -1px -1px 0 #ff6600, 1px -1px 0 #ff6600, -1px 1px 0 #ff6600"
       >
@@ -148,7 +148,7 @@ const HacktoberfestLeaderboard = () => {
       </Text>
     </Box>
 
-      <Box p={8}>
+      <Box p={6}>
         <Accordion allowToggle>
           {leaderboard.map((participant, index) => (
             <LeaderboardItem

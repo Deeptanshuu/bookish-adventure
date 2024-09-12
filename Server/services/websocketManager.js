@@ -1,6 +1,7 @@
 // services/websocketManager.js
 const { Server } = require('socket.io');
-const { getLeaderboard } = require('../services/teamService'); // Import getLeaderboard
+const { getLeaderboard } = require('../services/teamService');
+const { getDatabase } = require('../config/database');
 
 let io;
 
@@ -37,4 +38,29 @@ function broadcastLeaderboard(leaderboard) {
   }
 }
 
-module.exports = { initWebSocketServer, broadcastLeaderboard };
+
+function setupChangeStream() {
+  const db = getDatabase();
+  const Teams = db.collection('Teams');
+  const changeStream = Teams.watch();
+
+  console.log('Change stream setup complete.');
+
+  changeStream.on('change', async (change) => {
+    //console.log('Change detected:', change);
+    console.log('Change detected at database');
+
+    try {
+      const leaderboard = await getLeaderboard(); // Fetch updated leaderboard
+      broadcastLeaderboard(leaderboard);
+    } catch (error) {
+      console.error('Error retrieving updated leaderboard:', error);
+    }
+  });
+
+  changeStream.on('error', (error) => {
+    console.error('Change stream error:', error);
+  });
+}
+
+module.exports = { initWebSocketServer, broadcastLeaderboard, setupChangeStream };
