@@ -20,13 +20,19 @@ app.use(
     contentSecurityPolicy: false,
   })
 );
-// Serve static files from the 'dist' directory
-app.use(express.static(path.join(__dirname, 'dist')));
 
-// For any route, serve the index.html from the 'dist' folder
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// Serve static files
+app.use(express.static(path.join(__dirname, './dist')));
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, './dist', 'index.html'),
+   function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
 });
+
 
 // Database connection
 connectToDatabase().then(() => {
