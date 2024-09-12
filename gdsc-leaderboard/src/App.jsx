@@ -28,7 +28,8 @@ const App = () => {
   const hoverBgColor = useColorModeValue('gray.100', 'gray.500');
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+    const socket = io(`${apiEndpoint}`);
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
     });

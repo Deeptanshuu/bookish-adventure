@@ -7,13 +7,21 @@ const { connectToDatabase } = require('./config/database');
 const githubController = require('./controllers/githubController');
 const leaderboardController = require('./controllers/leaderboardController');
 const { initWebSocketServer, broadcastLeaderboard, setupChangeStream } = require('./services/websocketManager');
-
+const path = require('path');
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json());
+
+// Serve static files from the 'dist' directory
+app.use(express.static(path.join(__dirname, './dist')));
+
+// For any route, serve the index.html from the 'dist' folder
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // Database connection
 connectToDatabase().then(() => {
