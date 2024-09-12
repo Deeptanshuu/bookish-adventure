@@ -48,7 +48,6 @@ const LeaderBoard = () => {
         .sort((a, b) => b.score - a.score);
 
       setLeaderboard(sortedLeaderboard);
-
     });
     return () => {
       socket.disconnect();
@@ -71,58 +70,60 @@ const LeaderBoard = () => {
     })();
 
     return (
-        <AccordionItem mb={2} border={0}>
-          <AccordionButton 
-            _expanded={{ bg: isBottomThree ? 'red.100' : itemBgColor, color: 'orange.500' }} 
-            _hover={{ bg: hoverBgColor }}
-            borderRadius="base"
-            padding={3}
-            border={isBottomThree ? '1px solid red' : 'none'} // Red border for bottom three
-          >
-            <Flex flex="1" justifyContent="space-between" alignItems="center">
-              <Flex alignItems="center">
-                <Badge
-                  fontSize="xl"
-                  mr={3}
-                  colorScheme={badgeColor}
-                  bg={badgeColor === 'blue' ? 'transparent' : `${badgeColor}.100`}
-                  color={badgeColor === 'blue' ? 'black' : `${badgeColor}.500`}
-                >
-                  #{rank}
-                </Badge>
-                <Text fontSize="xl" fontWeight="semibold" color='black'>{name}</Text>
-              </Flex>
-              <Flex alignItems="center">
-                <AvatarGroup size="sm" max={4} mr={4}>
-                  {teamMembers.map((member, index) => (
-                    <Avatar name={member.name} key={index} />
-                  ))}
-                </AvatarGroup>
-                <Text fontSize="xl" fontWeight="semibold" color='black' ml={5} mr={8}>Score: {score}</Text>
-              </Flex>
+      <AccordionItem mb={2} border={0}>
+        <AccordionButton 
+          _expanded={{ bg: isBottomThree ? 'red.100' : itemBgColor, color: 'orange.500' }} 
+          _hover={{ bg: hoverBgColor }}
+          borderRadius="base"
+          padding={3}
+          border={isBottomThree ? '1px solid red' : 'none'} // Red border for bottom three
+        >
+          <Flex flex="1" justifyContent="space-between" alignItems="center" flexDirection={{ base: 'column', md: 'row' }}>
+            <Flex alignItems="center" mb={{ base: 2, md: 0 }}>
+              <Badge
+                fontSize={{ base: 'lg', md: 'xl' }}
+                mr={3}
+                colorScheme={badgeColor}
+                bg={badgeColor === 'blue' ? 'transparent' : `${badgeColor}.100`}
+                color={badgeColor === 'blue' ? 'black' : `${badgeColor}.500`}
+              >
+                #{rank}
+              </Badge>
+              <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="semibold" color='black'>{name}</Text>
             </Flex>
-            <AccordionIcon />
-          </AccordionButton>
+            <Flex alignItems="center" flexDirection={{ base: 'column', md: 'row' }}>
+              <AvatarGroup size="sm" max={4} mb={{ base: 2, md: 0 }} mr={4}>
+                {teamMembers.map((member, index) => (
+                  <Avatar name={member.name} key={index} />
+                ))}
+              </AvatarGroup>
+              <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="semibold" color='black' ml={{ base: 0, md: 5 }} mr={{ base: 0, md: 8 }}>
+                Score: {score}
+              </Text>
+            </Flex>
+          </Flex>
+          <AccordionIcon />
+        </AccordionButton>
         <AccordionPanel pb={4} bg={isBottomThree ? 'red.50' : itemBgColor} borderRadius="none">
-        <SimpleGrid columns={[1, null, 2]} spacing={4}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4}>
             <Box>
-              <Text fontSize="lg" fontWeight="bold" ml={5} mb={2}>
+              <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" ml={{ base: 4, md: 5 }} mb={2}>
                 Team Members:
               </Text>
-              <List spacing={3} listStyleType="none" ml={6}>
+              <List spacing={3} listStyleType="none" ml={{ base: 4, md: 6 }}>
                 {teamMembers.map((member, index) => (
                   <ListItem key={index} display="flex" alignItems="center">
                     <Avatar name={member.name} size="sm" mr={3} />
-                    <Text fontSize="md">{member.name}</Text>
+                    <Text fontSize={{ base: 'sm', md: 'md' }}>{member.name}</Text>
                   </ListItem>
                 ))}
               </List>
             </Box>
             <Box>
-              <Text fontSize="lg" fontWeight="bold" mb={2}>
+              <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" mb={2}>
                 Problems Solved:
               </Text>
-              <SimpleGrid columns={3} spacing={4}>
+              <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={4}>
                 <Box
                   bg="green.100"
                   p={2}
@@ -131,10 +132,10 @@ const LeaderBoard = () => {
                   borderColor="green.500"
                   textAlign="center"
                 >
-                  <Text fontSize="sm" fontWeight="semibold">
+                  <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold">
                     Easy
                   </Text>
-                  <Text fontSize="xl" fontWeight="bold">
+                  <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold">
                     {easySolved}
                   </Text>
                 </Box>
@@ -146,10 +147,10 @@ const LeaderBoard = () => {
                   borderColor="yellow.500"
                   textAlign="center"
                 >
-                  <Text fontSize="sm" fontWeight="semibold">
+                  <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold">
                     Medium
                   </Text>
-                  <Text fontSize="xl" fontWeight="bold">
+                  <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold">
                     {mediumSolved}
                   </Text>
                 </Box>
@@ -161,18 +162,18 @@ const LeaderBoard = () => {
                   borderColor="red.500"
                   textAlign="center"
                 >
-                  <Text fontSize="sm" fontWeight="semibold">
+                  <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold">
                     Hard
                   </Text>
-                  <Text fontSize="xl" fontWeight="bold">
+                  <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold">
                     {hardSolved}
                   </Text>
                 </Box>
               </SimpleGrid>
-              <Text fontSize="lg" fontWeight="bold" mt={4} mb={2}>
+              <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" mt={4} mb={2}>
                 Github Username:
               </Text>
-              <Text fontSize="md" fontWeight="semibold">
+              <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="semibold">
                 @{githubUsername}
               </Text>
             </Box>
@@ -191,7 +192,7 @@ const LeaderBoard = () => {
       <Header />
       <div className="py-8">
         <Box
-          maxW="4xl"
+          maxW={{ base: '90%', sm: '80%', md: '4xl' }}
           mx="auto"
           bg={bgColor}
           boxShadow="20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)"
@@ -199,11 +200,11 @@ const LeaderBoard = () => {
           borderRadius="lg"
           overflow="hidden"
         >
-          <Box px={6} py={6} bg="white" color="white" borderBottom="3px solid #ff6600" borderRadius="none">
+          <Box px={{ base: 4, md: 6 }} py={{ base: 4, md: 6 }} bg="white" color="white" borderBottom="3px solid #ff6600" borderRadius="none">
             <Text
               as="h1"
               fontWeight="bold"
-              fontSize="5xl"
+              fontSize={{ base: '3xl', md: '5xl' }}
               textAlign="center"
               textShadow="5px 5px 0 #ff6600, -1px -1px 0 #ff6600, 1px -1px 0 #ff6600, -1px 1px 0 #ff6600"
             >
@@ -211,7 +212,7 @@ const LeaderBoard = () => {
             </Text>
           </Box>
 
-          <Box p={6}>
+          <Box p={{ base: 4, md: 6 }}>
             <Accordion allowToggle>
               {top3.map((participant, index) => (
                 <LeaderboardItem
@@ -227,7 +228,7 @@ const LeaderBoard = () => {
                 />
               ))}
 
-              <Text textAlign="center" fontSize="3xl" color={'#ff6600'} fontStyle={'bold'} mt={4} mb={4}>
+              <Text textAlign="center" fontSize={{ base: '2xl', md: '3xl' }} color={'#ff6600'} fontStyle={'bold'} mt={4} mb={4}>
                 . . . . . 
               </Text>
               <Divider/>
