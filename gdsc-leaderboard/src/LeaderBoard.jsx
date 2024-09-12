@@ -226,7 +226,6 @@ const LeaderBoard = () => {
                 />
               ))}
 
-              <Divider/>
               <Text textAlign="center" fontSize="3xl" color={'#ff6600'} fontStyle={'bold'} mt={4} mb={4}>
                 . . . . . 
               </Text>
