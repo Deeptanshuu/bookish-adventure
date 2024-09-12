@@ -19,7 +19,8 @@ const Header = () => {
           <Image
             src="./logo-gray.png"
             alt="Your Logo"
-            maxH="120px"
+            maxH="100px"
+            p={2}
           />
         </Box>
         <Text fontSize="sm">

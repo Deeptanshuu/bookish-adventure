@@ -18,10 +18,9 @@ import {
   AvatarGroup,
   useColorModeValue,
 } from '@chakra-ui/react';
-import  Header  from './Header.jsx';
 import './App.css';
 
-const HacktoberfestLeaderboard = () => {
+const App = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const bgColor = useColorModeValue('white', 'gray.800');
   const itemBgColor = useColorModeValue('gray.100', 'gray.800');
@@ -141,7 +140,6 @@ const HacktoberfestLeaderboard = () => {
 
   return (
     <>
-    <Header />
     <div className='py-8'>
     <Box maxW="4xl" mx="auto" bg={bgColor} boxShadow="20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)" border="3px solid #ff6600" borderRadius="lg" overflow="hidden">
     <Box px={6} py={6} bg="white" color='white' borderBottom="3px solid #ff6600" borderRadius="none">
@@ -179,4 +177,4 @@ const HacktoberfestLeaderboard = () => {
   );
 };
 
-export default HacktoberfestLeaderboard;
+export default App;
