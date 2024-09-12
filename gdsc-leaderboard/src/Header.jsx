@@ -23,7 +23,7 @@ const Header = () => {
           />
         </Box>
         <Text fontSize="sm">
-          Made by Deeptanshu
+          Made by Deeptanshu Lal
         </Text>
       </Flex>
     </Box>

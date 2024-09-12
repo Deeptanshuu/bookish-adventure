@@ -95,7 +95,7 @@ const HacktoberfestLeaderboard = () => {
                   <Avatar name={member.name} key={index} />
                 ))}
               </AvatarGroup>
-              <Text fontSize="xl" fontWeight="semibold" color='black' ml={5} mr={8}>Score: {score}  📈</Text>
+              <Text fontSize="xl" fontWeight="semibold" color='black' ml={5} mr={8}>Score: {score}  </Text>
             </Flex>
           </Flex>
           <AccordionIcon />
