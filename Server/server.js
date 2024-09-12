@@ -8,13 +8,18 @@ const githubController = require('./controllers/githubController');
 const leaderboardController = require('./controllers/leaderboardController');
 const { initWebSocketServer, broadcastLeaderboard, setupChangeStream } = require('./services/websocketManager');
 const path = require('path');
+const helmet = require('helmet');
 const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors()); // Enable CORS for all routes
 app.use(bodyParser.json());
-
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 // Serve static files from the 'dist' directory
 app.use(express.static(path.join(__dirname, './dist')));
 
