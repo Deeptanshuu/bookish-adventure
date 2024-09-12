@@ -18,6 +18,7 @@ import {
   AvatarGroup,
   useColorModeValue,
 } from '@chakra-ui/react';
+import  Header  from './Header.jsx';
 import './App.css';
 
 const HacktoberfestLeaderboard = () => {
@@ -33,6 +34,7 @@ const HacktoberfestLeaderboard = () => {
     });
     socket.on('leaderboard_update', (data) => {
       const sortedLeaderboard = data
+      
         .map((team) => ({
           name: team.team_name,
           score: team.score,
@@ -40,17 +42,19 @@ const HacktoberfestLeaderboard = () => {
           easySolved: team.problems_solved.easy || 0,
           mediumSolved: team.problems_solved.medium || 0,
           hardSolved: team.problems_solved.hard || 0,
+          githubUsername: team.github_username
         }))
         .sort((a, b) => b.score - a.score);
       
       setLeaderboard(sortedLeaderboard);
+
     });
     return () => {
       socket.disconnect();
     };
   }, []);
 
-  const LeaderboardItem = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved }) => {
+  const LeaderboardItem = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved, githubUsername }) => {
     const badgeColor = (() => {
       switch (rank) {
         case 1:
@@ -125,6 +129,8 @@ const HacktoberfestLeaderboard = () => {
                   <Text fontSize="xl" fontWeight="bold">{hardSolved}</Text>
                 </Box>
               </SimpleGrid>
+              <Text fontSize="lg" fontWeight="bold" mt={4} mb={2}>Github Username:</Text>
+              <Text fontSize="md" fontWeight="semibold">@{githubUsername}</Text>
             </Box>
           </SimpleGrid>
         </AccordionPanel>
@@ -134,7 +140,9 @@ const HacktoberfestLeaderboard = () => {
   
 
   return (
-    <div className='py-10'>
+    <>
+    <Header />
+    <div className='py-8'>
     <Box maxW="4xl" mx="auto" bg={bgColor} boxShadow="20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)" border="3px solid #ff6600" borderRadius="lg" overflow="hidden">
     <Box px={6} py={6} bg="white" color='white' borderBottom="3px solid #ff6600" borderRadius="none">
       <Text 
@@ -152,7 +160,7 @@ const HacktoberfestLeaderboard = () => {
         <Accordion allowToggle>
           {leaderboard.map((participant, index) => (
             <LeaderboardItem
-              key={participant.name}
+              key={`${participant.name}-${index}`}
               rank={index + 1}
               name={participant.name}
               score={participant.score}
@@ -160,12 +168,14 @@ const HacktoberfestLeaderboard = () => {
               easySolved={participant.easySolved}
               mediumSolved={participant.mediumSolved}
               hardSolved={participant.hardSolved}
+              githubUsername={participant.githubUsername}
             />
           ))}
         </Accordion>
       </Box>
     </Box>
     </div>
+    </>
   );
 };
 
