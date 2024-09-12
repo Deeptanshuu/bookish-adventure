@@ -17,6 +17,7 @@ import {
   Avatar,
   AvatarGroup,
   useColorModeValue,
+  Divider,
 } from '@chakra-ui/react';
 import Header from './Header.jsx';
 import './App.css';
@@ -46,73 +47,63 @@ const LeaderBoard = () => {
         .sort((a, b) => b.score - a.score);
 
       setLeaderboard(sortedLeaderboard);
+
     });
     return () => {
       socket.disconnect();
     };
   }, []);
 
-  const LeaderboardItem = ({
-    rank,
-    name,
-    score,
-    teamMembers,
-    easySolved,
-    mediumSolved,
-    hardSolved,
-    githubUsername,
-  }) => {
+  const LeaderboardItem = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved, githubUsername, isBottomThree }) => {
     const badgeColor = (() => {
+      if (isBottomThree) return 'red'; // Red for bottom three
       switch (rank) {
         case 1:
           return 'yellow'; // Gold for 1st place
         case 2:
-          return 'gray'; // Silver for 2nd place
+          return 'gray';   // Silver for 2nd place
         case 3:
           return 'orange'; // Bronze for 3rd place
         default:
-          return 'blue'; // Blue for other ranks
+          return 'blue';   // Blue for other ranks
       }
     })();
 
     return (
-      <AccordionItem mb={2} border={0}>
-        <AccordionButton
-          _expanded={{ bg: itemBgColor, color: 'orange.500' }}
-          _hover={{ bg: hoverBgColor }}
-          borderRadius="base"
-          padding={3}
-        >
-          <Flex flex="1" justifyContent="space-between" alignItems="center">
-            <Flex alignItems="center">
-              <Badge
-                fontSize="xl"
-                mr={3}
-                colorScheme={badgeColor}
-                bg={badgeColor === 'blue' ? 'transparent' : `${badgeColor}.100`}
-                color={badgeColor === 'blue' ? 'black' : `${badgeColor}.500`}
-              >
-                #{rank}
-              </Badge>
-              <Text fontSize="xl" fontWeight="semibold" color="black">
-                {name}
-              </Text>
+        <AccordionItem mb={2} border={0}>
+          <AccordionButton 
+            _expanded={{ bg: isBottomThree ? 'red.100' : itemBgColor, color: 'orange.500' }} 
+            _hover={{ bg: hoverBgColor }}
+            borderRadius="base"
+            padding={3}
+            border={isBottomThree ? '1px solid red' : 'none'} // Red border for bottom three
+          >
+            <Flex flex="1" justifyContent="space-between" alignItems="center">
+              <Flex alignItems="center">
+                <Badge
+                  fontSize="xl"
+                  mr={3}
+                  colorScheme={badgeColor}
+                  bg={badgeColor === 'blue' ? 'transparent' : `${badgeColor}.100`}
+                  color={badgeColor === 'blue' ? 'black' : `${badgeColor}.500`}
+                >
+                  #{rank}
+                </Badge>
+                <Text fontSize="xl" fontWeight="semibold" color='black'>{name}</Text>
+              </Flex>
+              <Flex alignItems="center">
+                <AvatarGroup size="sm" max={4} mr={4}>
+                  {teamMembers.map((member, index) => (
+                    <Avatar name={member.name} key={index} />
+                  ))}
+                </AvatarGroup>
+                <Text fontSize="xl" fontWeight="semibold" color='black' ml={5} mr={8}>Score: {score}</Text>
+              </Flex>
             </Flex>
-            <Flex alignItems="center">
-              <AvatarGroup size="sm" max={4} mr={4}>
-                {teamMembers.map((member, index) => (
-                  <Avatar name={member.name} key={index} />
-                ))}
-              </AvatarGroup>
-              <Text fontSize="xl" fontWeight="semibold" color="black" ml={5} mr={8}>
-                Score: {score}
-              </Text>
-            </Flex>
-          </Flex>
-          <AccordionIcon />
-        </AccordionButton>
-        <AccordionPanel pb={4} bg={itemBgColor} borderRadius="none">
-          <SimpleGrid columns={[1, null, 2]} spacing={4}>
+            <AccordionIcon />
+          </AccordionButton>
+        <AccordionPanel pb={4} bg={isBottomThree ? 'red.50' : itemBgColor} borderRadius="none">
+        <SimpleGrid columns={[1, null, 2]} spacing={4}>
             <Box>
               <Text fontSize="lg" fontWeight="bold" ml={5} mb={2}>
                 Team Members:
@@ -192,6 +183,7 @@ const LeaderBoard = () => {
 
   const top3 = leaderboard.slice(0, 5);
   const bottom3 = leaderboard.slice(-3);
+  const isBottomThree = true;
 
   return (
     <>
@@ -234,9 +226,11 @@ const LeaderBoard = () => {
                 />
               ))}
 
-              <Text textAlign="center" fontSize="xl" fontStyle={'bold'} mt={4} mb={4}>
+              <Divider/>
+              <Text textAlign="center" fontSize="3xl" color={'#ff6600'} fontStyle={'bold'} mt={4} mb={4}>
                 . . . . . 
               </Text>
+              <Divider/>
 
               {bottom3.map((participant, index) => (
                 <LeaderboardItem
@@ -249,6 +243,7 @@ const LeaderBoard = () => {
                   mediumSolved={participant.mediumSolved}
                   hardSolved={participant.hardSolved}
                   githubUsername={participant.githubUsername}
+                  isBottomThree={isBottomThree} // Pass isBottomThree prop
                 />
               ))}
             </Accordion>
