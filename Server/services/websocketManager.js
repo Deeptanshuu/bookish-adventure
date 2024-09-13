@@ -60,6 +60,10 @@ function setupChangeStream() {
 
   changeStream.on('error', (error) => {
     console.error('Change stream error:', error);
+    setTimeout(() => {
+      console.log('Reconnecting to the change stream...');
+      setupChangeStream(); // Attempt to reinitialize
+    }, 5000); // Retry after 5 seconds
   });
 }
 
