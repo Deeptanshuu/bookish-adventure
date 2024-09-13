@@ -30,7 +30,7 @@ const Header = () => {
             p={2}
           />
         </Box>
-        <Text fontSize={{ base: 'sm', md: 'md' }} textAlign={{ base: 'center', md: 'left' }}>
+        <Text fontSize={{ base: 'sm', md: 'sm' }} textAlign={{ base: 'center', md: 'left' }}>
           Made by Deeptanshu Lal
         </Text>
       </Flex>
