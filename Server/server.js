@@ -22,10 +22,10 @@ app.use(
 );
 
 // Serve static files
-app.use(express.static(path.join(__dirname, './dist')));
+app.use(express.static(path.join(__dirname, '../gdsc-leaderboard/dist')));
 
 app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, './dist', 'index.html'),
+  res.sendFile(path.join(__dirname, '../gdsc-leaderboard/dist', 'index.html'),
    function(err) {
     if (err) {
       res.status(500).send(err);
