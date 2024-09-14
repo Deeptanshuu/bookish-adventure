@@ -61,7 +61,7 @@ connectToDatabase().then(() => {
 
   // Start HTTP server
   server.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on port http://localhost:${port}`);
     
     // Initial leaderboard broadcast
     updateAndBroadcastLeaderboard();
