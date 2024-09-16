@@ -1,38 +1,48 @@
-import { Box, Flex, Text, Image, useColorModeValue } from '@chakra-ui/react';
+//Header.jsx
+import { Box, Flex, Text, Image, useColorMode, Button, useColorModeValue } from '@chakra-ui/react';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 const Header = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = useColorModeValue('rgba(255, 255, 255, 0.3)', 'rgba(26, 32, 44, 0.3)');
+  const borderColor = useColorModeValue('#ff8433', '#ff6600');
+  const textColor = useColorModeValue('gray.800', 'white');
 
   return (
-    <Box 
-      as="header" 
+    <Box
+      as="header"
       bg={bgColor}
-      borderBottom={'3px solid #ff8433'} 
-      py={2} // Adjust padding for better spacing
+      borderBottom={`3px solid ${borderColor}`}
+      py={2}
       position="sticky"
       top={0}
       zIndex="sticky"
       backdropFilter="blur(10px)"
     >
-      <Flex 
-        maxW="container.xl" 
-        mx="auto" 
-        px={{ base: 4, md: 6 }} // Responsive padding
-        justifyContent="space-between" 
-        alignItems="center" 
-        flexDir={{ base: 'column', md: 'row' }} // Stack items vertically on mobile
+      <Flex
+        maxW="container.xl"
+        mx="auto"
+        px={{ base: 4, md: 6 }}
+        justifyContent="space-between"
+        alignItems="center"
+        flexDir={{ base: 'column', md: 'row' }}
       >
         <Box mb={{ base: 2, md: 0 }}>
           <Image
-            src="./logo-gray.png"
+            src={colorMode === 'light' ? "./logo-gray.png" : "./logo-gray.png"}
             alt="Your Logo"
-            maxH={{ base: '80px', md: '100px' }} // Responsive height
+            maxH={{ base: '80px', md: '100px' }}
             p={2}
           />
         </Box>
-        <Text fontSize={{ base: 'sm', md: 'sm' }} textAlign={{ base: 'center', md: 'left' }}>
-          Made by Deeptanshu Lal
-        </Text>
+        <Flex alignItems="center">
+          <Text fontSize={{ base: 'sm', md: 'sm' }} textAlign={{ base: 'center', md: 'left' }} color={textColor} mr={4}>
+            Made by Deeptanshu Lal
+          </Text>
+          <Button onClick={toggleColorMode} size="sm">
+            {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+          </Button>
+        </Flex>
       </Flex>
     </Box>
   );
