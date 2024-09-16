@@ -250,7 +250,7 @@ const LeaderBoard = () => {
               ))}
 
               <Divider/>
-              <Text textAlign="center" fontSize={{ base: '2xl', md: '3xl' }} color={titleTextColor} fontStyle={'bold'} mt={4} mb={4}>
+              <Text textAlign="center" fontSize={{ base: '2xl', md: '3xl' }} color={'#ff6600'} fontStyle={'bold'} mt={4} mb={4}>
                 . . . . . 
               </Text>
               <Divider/>
