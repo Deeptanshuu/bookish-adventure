@@ -210,7 +210,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <div className="py-8">
+      <div className="py-10">
         <Box
           maxW="4xl"
           mx="auto"
