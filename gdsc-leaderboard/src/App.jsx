@@ -93,7 +93,7 @@ const App = () => {
     return (
       <AccordionItem mb={4} border={0}>
         <AccordionButton
-          _expanded={{ bg: itemBgColor, color: 'orange.500' }}
+          _expanded={{ bg: itemBgColor, color: '#ff8c00' }}
           _hover={{ bg: hoverBgColor }}
           borderRadius="md"
           padding={4}
@@ -216,9 +216,9 @@ const App = () => {
           mx="auto"
           bg={bgColor}
           boxShadow={{ base: 'none', md: "20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)" }}
-          border={{ base: 'none', md: '3px solid #ff8c00' }}
-          borderTop={{ base:'3px solid #ff8c00', md: '3px solid #ff8c00' }}
-          borderBottom={{ base:'3px solid #ff8c00', md: '3px solid #ff8c00' }}
+          border={{ base: 'none', md: '3px solid #ff6600' }}
+          borderTop={{ base:'3px solid #ff6600', md: '3px solid #ff6600' }}
+          borderBottom={{ base:'3px solid #ff6600', md: '3px solid #ff6600' }}
           borderRadius={{ base: 'none', md: '10px' }}
           overflow="hidden"
         >
