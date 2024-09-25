@@ -97,10 +97,10 @@ const App = () => {
           _hover={{ bg: hoverBgColor }}
           borderRadius="md"
           padding={4}
-          flexDir={{ base: 'column', md: 'row' }} // Adjusts layout direction for different screen sizes
+          flexDir={{ base: 'row', md: 'row' }} // Adjusts layout direction for different screen sizes
         >
           <Flex flex="1" justifyContent="space-between" alignItems="center">
-            <Flex alignItems="center" flexDir={{ base: 'column', md: 'row' }}>
+            <Flex alignItems="center" flexDir={{ base: 'row', md: 'row' }}>
             <Badge
                 fontSize={{ base: 'lg', md: 'xl' }}
                 mr={3}
@@ -203,6 +203,7 @@ const App = () => {
           </SimpleGrid>
         </AccordionPanel>
       </AccordionItem>
+      
     );
   };
 
@@ -214,9 +215,11 @@ const App = () => {
           maxW="4xl"
           mx="auto"
           bg={bgColor}
-          boxShadow="20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)"
-          border="3px solid #ff6600"
-          borderRadius="lg"
+          boxShadow={{ base: 'none', md: "20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)" }}
+          border={{ base: 'none', md: '3px solid #ff8c00' }}
+          borderTop={{ base:'3px solid #ff8c00', md: '3px solid #ff8c00' }}
+          borderBottom={{ base:'3px solid #ff8c00', md: '3px solid #ff8c00' }}
+          borderRadius={{ base: 'none', md: '10px' }}
           overflow="hidden"
         >
           <Box px={{ base: 4, md: 6 }} py={{ base: 4, md: 6 }} bg={bgColor} borderBottom="3px solid #ff6600" borderRadius="none">
@@ -242,9 +245,9 @@ const App = () => {
               bg={useColorModeValue('gray.100', 'gray.700')}
               borderRadius="md"
             >
-              <SearchIcon color={textColor} />
+              <SearchIcon color={textColor} m={2} />
               <Input
-                placeholder="Search by team name, member name or github username"
+                placeholder=""
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 variant="unstyled"
