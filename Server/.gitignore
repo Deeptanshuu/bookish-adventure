@@ -22,3 +22,4 @@ node_modules
 *.sw?
 *.env
 artillery.yml
+k6-stress.js
