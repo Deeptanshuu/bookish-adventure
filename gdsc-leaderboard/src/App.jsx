@@ -25,12 +25,12 @@ import Header from './Header';
 
 const App = () => {
   const [leaderboard, setLeaderboard] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const bgColor = useColorModeValue('white', 'gray.800');
-  const itemBgColor = useColorModeValue('gray.100', 'gray.700'); 
-  const hoverBgColor = useColorModeValue('gray.200', 'gray.600'); 
-  const textColor = useColorModeValue('black', 'white');
-  const titleTextColor = useColorModeValue('white', 'gray.900');
+  const [searchQuery, setSearchQuery] = useState('');
+  const bgColor = useColorModeValue('white', 'black');
+  const itemBgColor = useColorModeValue('gray.100', 'gray.900');
+  const hoverBgColor = useColorModeValue('gray.200', 'gray.800');
+  const textColor = useColorModeValue('black', 'gray.100');
+  const titleTextColor = useColorModeValue('white', 'black');
   
   useEffect(() => {
     const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;

@@ -24,11 +24,11 @@ import './App.css';
 
 const LeaderBoard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
-  const bgColor = useColorModeValue('white', 'gray.800');
-  const hoverBgColor = useColorModeValue('gray.200', 'gray.600');
+  const bgColor = useColorModeValue('white', 'black');
+  const hoverBgColor = useColorModeValue('gray.200', 'gray.800');
   const textColor = useColorModeValue('black', 'white');
-  const titleBgColor = useColorModeValue('white', 'gray.900');
-  const titleTextColor = useColorModeValue('white', 'gray.900');
+  const titleBgColor = useColorModeValue('white', 'black');
+  const titleTextColor = useColorModeValue('white', 'black');
   const borderColor = useColorModeValue('#ff6600', '#ff6600');
 
   useEffect(() => {
