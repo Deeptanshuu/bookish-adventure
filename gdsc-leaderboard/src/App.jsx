@@ -49,7 +49,11 @@ const App = () => {
           hardSolved: team.problems_solved.hard || 0,
           githubUsername: team.github_username,
         }))
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.score - a.score)        
+        .map((team, index) => ({
+          ...team,
+          rank: index + 1, // Assign rank based on the sorted leaderboard
+        }));
 
       setLeaderboard(sortedLeaderboard);
     });
@@ -260,7 +264,7 @@ const App = () => {
               {filteredLeaderboard.map((team, index) => (
                 <LeaderboardItem
                   key={index}
-                  rank={index + 1}
+                  rank={team.rank}
                   name={team.name}
                   score={team.score}
                   teamMembers={team.teamMembers}
