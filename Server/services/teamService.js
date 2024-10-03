@@ -65,7 +65,7 @@ async function getLeaderboard() {
 
     // Sort by calculated score in descending order
     //console.log(leaderboard);
-    return leaderboard.sort((a, b) => b.score - a.score); // Sort by score descending
+    return leaderboard; // Sort by score descending
   } catch (error) {
     throw error;
   }

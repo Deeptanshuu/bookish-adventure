@@ -29,7 +29,7 @@ const Header = () => {
       >
         <Box m={{ base: 2, md: 2 }}>
           <Image
-            src={colorMode === 'light' ? "./logo-gray.svg" : "./logo-gray.svg"}
+            src={colorMode === 'light' ? "./logo-gray.svg" : "./logo.svg"}
             alt="Your Logo"
             maxH={{ base: '40px', md: '50px' }}
             p={2}
