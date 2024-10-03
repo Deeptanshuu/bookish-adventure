@@ -62,10 +62,9 @@ async function getLeaderboard() {
         github_username: team.github_username
       };
     });
-
-    // Sort by calculated score in descending order
+  
     //console.log(leaderboard);
-    return leaderboard; // Sort by score descending
+    return leaderboard;
   } catch (error) {
     throw error;
   }
