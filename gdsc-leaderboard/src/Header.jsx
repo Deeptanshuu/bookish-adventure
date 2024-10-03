@@ -27,16 +27,16 @@ const Header = () => {
         alignItems="center"
         flexDir={{ base: 'row', md: 'row' }}
       >
-        <Box mb={{ base: 0, md: 0 }}>
+        <Box m={{ base: 2, md: 2 }}>
           <Image
-            src={colorMode === 'light' ? "./logo-gray.png" : "./logo-gray.png"}
+            src={colorMode === 'light' ? "./logo-gray.svg" : "./logo-gray.svg"}
             alt="Your Logo"
-            maxH={{ base: '70px', md: '100px' }}
+            maxH={{ base: '40px', md: '50px' }}
             p={2}
           />
         </Box>
         <Flex alignItems="center">
-          <Text fontSize={{ base: '0.6rem', md: 'md' }} textAlign={{ base: 'center', md: 'left' }} color={textColor} mr={4}>
+          <Text display={{ base: 'none', md: 'block' }} fontSize={{ base: '0.6rem', md: 'md' }} textAlign={{ base: 'center', md: 'left' }} color={textColor} mr={4}>
             Made by Deeptanshu Lal
           </Text>
           <Button onClick={toggleColorMode} size="xs">
