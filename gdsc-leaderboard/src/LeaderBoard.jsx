@@ -87,8 +87,6 @@ const LeaderBoard = () => {
       isBottomThree ? 'red.900' : 'gray.700'
     );
 
-    const borderColor = useColorModeValue('red.500', 'red.300');
-
     return (
       <AccordionItem mb={2} border={0}>
       <AccordionButton 
