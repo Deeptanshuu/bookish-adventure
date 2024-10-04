@@ -19,6 +19,7 @@
     "helmet": "^7.1.0",
     "mongodb": "^6.8.1",
     "mongoose": "^8.6.2",
+    "rate-limiter-flexible": "^5.0.3",
     "socket.io": "^4.7.5",
     "ws": "^8.18.0"
   },

@@ -1,30 +1,47 @@
 const { Server } = require('socket.io');
 const { getLeaderboard } = require('../services/teamService');
 const { getDatabase } = require('../config/database');
+const { RateLimiterMemory } = require('rate-limiter-flexible');
+
+const rateLimiter = new RateLimiterMemory({
+  points: 5, // 5 requests
+  duration: 1, // per second
+});
 
 let io;
-let user = 0;
+const users = new Set();
+
 // Initialize WebSocket Server
 function initWebSocketServer(server) {
   io = new Server(server, {
     cors: {
-      origin: '*', // Adjust to match your frontend domain
+      origin: '*',
       methods: ['GET', 'POST'],
     },
   });
 
   io.on('connection', (socket) => {
     console.log('New WebSocket connection:', socket.id);
-    user++;
-    console.log('Total connected users:', user);
+    users.add(socket.id);
+    console.log('Total connected users:', users.size);
 
     // Send the current leaderboard to the newly connected client
     sendLeaderboard(socket);
 
+    socket.on('someEvent', async (data) => {
+      try {
+        await rateLimiter.consume(socket.id); // Consume a point for this user
+        // Process the event
+      } catch (rejRes) {
+        // Rate limit exceeded
+        socket.emit('rateLimitExceeded', 'Too many requests, please try again later.');
+      }
+    });
+
     socket.on('disconnect', () => {
       console.log('Client disconnected:', socket.id);
-      user--;
-      console.log('Total connected users:', user);
+      users.delete(socket.id);
+      console.log('Total connected users:', users.size);
     });
   });
 }
