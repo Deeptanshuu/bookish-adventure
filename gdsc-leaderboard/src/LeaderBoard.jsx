@@ -201,8 +201,8 @@ const LeaderBoard = () => {
     );
   };
 
-  const top3 = leaderboard.slice(0, 5);
-  const bottom3 = leaderboard.slice(-3);
+  const top3 = leaderboard.slice(0, 4);
+  const bottom3 = leaderboard.slice(-4);
   const isBottomThree = true;
 
   return (
@@ -251,7 +251,7 @@ const LeaderBoard = () => {
               <Text textAlign="center" fontSize={{ base: '2xl', md: '3xl' }} color={'#ff6600'} fontStyle={'bold'} mt={4} mb={4}>
                 . . . . . 
               </Text>
-              <Divider/>
+              <Divider mb={4}/>
 
               {bottom3.map((participant, index) => (
                 <LeaderboardItem
