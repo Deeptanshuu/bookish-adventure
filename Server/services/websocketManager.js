@@ -3,7 +3,7 @@ const { getLeaderboard } = require('../services/teamService');
 const { getDatabase } = require('../config/database');
 
 let io;
-
+let user = 0;
 // Initialize WebSocket Server
 function initWebSocketServer(server) {
   io = new Server(server, {
@@ -15,12 +15,16 @@ function initWebSocketServer(server) {
 
   io.on('connection', (socket) => {
     console.log('New WebSocket connection:', socket.id);
+    user++;
+    console.log('Total connected users:', user);
 
     // Send the current leaderboard to the newly connected client
     sendLeaderboard(socket);
 
     socket.on('disconnect', () => {
       console.log('Client disconnected:', socket.id);
+      user--;
+      console.log('Total connected users:', user);
     });
   });
 }
