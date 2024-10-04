@@ -36,7 +36,6 @@ app.get('/*', function(req, res) {
 
 // Database connection
 connectToDatabase().then(() => {
-  // Create HTTP server
   const server = http.createServer(app);
 
   // Initialize Socket.IO server
