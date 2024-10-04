@@ -62,14 +62,16 @@ const App = () => {
     };
   }, []);
 
-  const filteredLeaderboard = leaderboard.filter(
-    (team) =>
-      team.name.toLowerCase().includes(searchQuery.toLowerCase()) || // Filter by team name
-      team.teamMembers.some((member) =>
-        member.name.toLowerCase().includes(searchQuery.toLowerCase()) // Filter by team members
-      ) ||
-      team.githubUsername.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredLeaderboard = leaderboard.filter((team) => {
+    const nameMatches = team.name?.toLowerCase().includes(searchQuery.toLowerCase());
+    const memberMatches = team.teamMembers?.some((member) =>
+      member.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const githubUsernameMatches = team.githubUsername?.toLowerCase().includes(searchQuery.toLowerCase());
+  
+    return nameMatches || memberMatches || githubUsernameMatches;
+  });
+  
 
   const LeaderboardItem = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved, githubUsername }) => {
     const badgeColor = (() => {
