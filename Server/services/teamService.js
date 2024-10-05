@@ -14,7 +14,6 @@ async function updateTeamPoints(username, difficulty, points) {
       {
         $inc: {
           [`problems_solved.${difficulty}`]: 1,
-          score: points
         }
       }
     );
