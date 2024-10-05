@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
@@ -31,7 +32,7 @@ const App = () => {
   const hoverBgColor = useColorModeValue('gray.200', 'gray.800');
   const textColor = useColorModeValue('black', 'gray.100');
   const titleTextColor = useColorModeValue('white', 'black');
-  
+
   useEffect(() => {
     const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
     const socket = io(`${apiEndpoint}`);
@@ -49,7 +50,7 @@ const App = () => {
           hardSolved: team.problems_solved.hard || 0,
           githubUsername: team.github_username,
         }))
-        .sort((a, b) => b.score - a.score)        
+        .sort((a, b) => b.score - a.score)
         .map((team, index) => ({
           ...team,
           rank: index + 1, // Assign rank based on the sorted leaderboard
@@ -68,10 +69,10 @@ const App = () => {
       member.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
     const githubUsernameMatches = team.githubUsername?.toLowerCase().includes(searchQuery.toLowerCase());
-  
+
     return nameMatches || memberMatches || githubUsernameMatches;
   });
-  
+
 
   const LeaderboardItem = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved, githubUsername }) => {
     const badgeColor = (() => {
@@ -107,7 +108,7 @@ const App = () => {
         >
           <Flex flex="1" justifyContent="space-between" alignItems="center">
             <Flex alignItems="center" flexDir={{ base: 'row', md: 'row' }}>
-            <Badge
+              <Badge
                 fontSize={{ base: 'lg', md: 'xl' }}
                 mr={3}
                 colorScheme={badgeColor}
@@ -148,41 +149,11 @@ const App = () => {
                 ))}
               </List>
             </Box>
-            <Box>
+            <Box align="center" justifyContent="center">
               <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" mb={2} color={textColor}>
                 Problems Solved:
               </Text>
-              <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={4}>
-                <Box
-                  bg={useColorModeValue('green.100', 'green.800')}
-                  p={2}
-                  borderRadius="md"
-                  border="1px"
-                  borderColor={useColorModeValue('green.500', 'green.200')}
-                  textAlign="center"
-                >
-                  <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold" color={textColor}>
-                    Easy
-                  </Text>
-                  <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold" color={textColor}>
-                    {easySolved}
-                  </Text>
-                </Box>
-                <Box
-                  bg={useColorModeValue('yellow.100', 'yellow.800')}
-                  p={2}
-                  borderRadius="md"
-                  border="1px"
-                  borderColor={useColorModeValue('yellow.500', 'yellow.200')}
-                  textAlign="center"
-                >
-                  <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold" color={textColor}>
-                    Medium
-                  </Text>
-                  <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold" color={textColor}>
-                    {mediumSolved}
-                  </Text>
-                </Box>
+              <SimpleGrid columns={1} spacing={0} maxWidth="200px" mx="auto">
                 <Box
                   bg={useColorModeValue('red.100', 'red.800')}
                   p={2}
@@ -190,6 +161,10 @@ const App = () => {
                   border="1px"
                   borderColor={useColorModeValue('red.500', 'red.200')}
                   textAlign="center"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
                 >
                   <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold" color={textColor}>
                     Hard
@@ -209,7 +184,7 @@ const App = () => {
           </SimpleGrid>
         </AccordionPanel>
       </AccordionItem>
-      
+
     );
   };
 
@@ -223,13 +198,13 @@ const App = () => {
           bg={bgColor}
           boxShadow={{ base: 'none', md: "20px 20px rgba(255, 102, 0, 0.8), 0 1px 3px rgba(255, 102, 0, 0.8)" }}
           border={{ base: 'none', md: '3px solid #ff6600' }}
-          borderTop={{ base:'3px solid #ff6600', md: '3px solid #ff6600' }}
-          borderBottom={{ base:'3px solid #ff6600', md: '3px solid #ff6600' }}
+          borderTop={{ base: '3px solid #ff6600', md: '3px solid #ff6600' }}
+          borderBottom={{ base: '3px solid #ff6600', md: '3px solid #ff6600' }}
           borderRadius={{ base: 'none', md: '10px' }}
           overflow="hidden"
         >
           <Box px={{ base: 4, md: 6 }} py={{ base: 4, md: 6 }} bg={bgColor} borderBottom="3px solid #ff6600" borderRadius="none">
-          <Text
+            <Text
               as="h1"
               fontWeight="bold"
               fontSize={{ base: '3xl', md: '5xl' }}
@@ -237,7 +212,7 @@ const App = () => {
               color={titleTextColor}
               textShadow={`5px 5px 0 ${useColorModeValue('#ff6600', '#ff8c00')}, -1px -1px 0 ${useColorModeValue('#ff6600', '#ff8c00')}, 1px -1px 0 ${useColorModeValue('#ff6600', '#ff8c00')}, -1px 1px 0 ${useColorModeValue('#ff6600', '#ff8c00')}`}
             >
-              Hacktoberfest <br/> Leaderboard
+              Hacktoberfest <br /> Leaderboard
             </Text>
             <Flex
               align="center"

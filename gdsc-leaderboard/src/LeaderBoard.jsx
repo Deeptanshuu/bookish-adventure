@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
@@ -137,41 +138,11 @@ const LeaderBoard = () => {
                 ))}
               </List>
             </Box>
-            <Box>
+            <Box align="center" justifyContent="center">
               <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="bold" mb={2} color={textColor}>
                 Problems Solved:
               </Text>
-              <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={4}>
-                <Box
-                  bg={useColorModeValue('green.100', 'green.800')}
-                  p={2}
-                  borderRadius="md"
-                  border="1px"
-                  borderColor={useColorModeValue('green.500', 'green.200')}
-                  textAlign="center"
-                >
-                  <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold" color={textColor}>
-                    Easy
-                  </Text>
-                  <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold" color={textColor}>
-                    {easySolved}
-                  </Text>
-                </Box>
-                <Box
-                  bg={useColorModeValue('yellow.100', 'yellow.800')}
-                  p={2}
-                  borderRadius="md"
-                  border="1px"
-                  borderColor={useColorModeValue('yellow.500', 'yellow.200')}
-                  textAlign="center"
-                >
-                  <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold" color={textColor}>
-                    Medium
-                  </Text>
-                  <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="bold" color={textColor}>
-                    {mediumSolved}
-                  </Text>
-                </Box>
+              <SimpleGrid columns={1} spacing={0} maxWidth="200px" mx="auto">
                 <Box
                   bg={useColorModeValue('red.100', 'red.800')}
                   p={2}
@@ -179,6 +150,10 @@ const LeaderBoard = () => {
                   border="1px"
                   borderColor={useColorModeValue('red.500', 'red.200')}
                   textAlign="center"
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  justifyContent="center"
                 >
                   <Text fontSize={{ base: 'sm', md: 'sm' }} fontWeight="semibold" color={textColor}>
                     Hard

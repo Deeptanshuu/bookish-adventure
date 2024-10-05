@@ -67,7 +67,7 @@ function broadcastLeaderboard(leaderboard) {
 // Set up MongoDB change stream and watch for updates
 function setupChangeStream() {
   const db = getDatabase();
-  const Teams = db.collection('Teams');
+  const Teams = db.collection('Teams-2');
   const changeStream = Teams.watch();
 
   console.log('Change stream setup complete.');

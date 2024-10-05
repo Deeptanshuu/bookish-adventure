@@ -3,13 +3,13 @@ const { getDifficultyAndPoints } = require('../utils/helpers');
 
 async function getTeamByGithubUsername(username) {
   const db = getDatabase();
-  return db.collection('Teams').findOne({ "github_username": username });
+  return db.collection('Teams-2').findOne({ "github_username": username });
 }
 
 async function updateTeamPoints(username, difficulty, points) {
   const db = getDatabase();
   try {
-    const result = await db.collection('Teams').updateOne(
+    const result = await db.collection('Teams-2').updateOne(
       { "github_username": username },
       {
         $inc: {
@@ -26,7 +26,7 @@ async function updateTeamPoints(username, difficulty, points) {
 async function getLeaderboard() {
   const db = getDatabase();
   try {
-    const teams = await db.collection('Teams').find({ disqualified: false })
+    const teams = await db.collection('Teams-2').find({ disqualified: false })
       .project({
         team_name: 1,
         team_members: 1, // Include team members
@@ -37,6 +37,7 @@ async function getLeaderboard() {
       .toArray();
 
     // Dynamically calculate score
+    //console.log(teams);
     const leaderboard = teams.map(team => {
       const { easy = 0, medium = 0, hard = 0 } = team.problems_solved || {};
 
