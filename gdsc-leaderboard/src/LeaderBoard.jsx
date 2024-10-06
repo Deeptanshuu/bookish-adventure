@@ -78,7 +78,7 @@ const LeaderBoard = () => {
     
     // Sort by total score
     const sortedLeaderboard = updatedLeaderboard
-      .filter(team => team.disqualified === false)
+      //.filter(team => team.disqualified === false)
       .map(team => ({
         name: team.team_name,
         score: team.totalScore, // Use the new total score
