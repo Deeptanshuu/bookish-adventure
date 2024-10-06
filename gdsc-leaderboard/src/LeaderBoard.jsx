@@ -176,8 +176,8 @@ const LeaderBoard = () => {
     );
   };
 
-  const top3 = leaderboard.slice(0, 4);
-  const bottom3 = leaderboard.slice(-4);
+  const top3 = leaderboard.slice(0, 5);
+  const bottom3 = leaderboard.slice(-3);
   const isBottomThree = true;
 
   return (
@@ -211,7 +211,7 @@ const LeaderBoard = () => {
               {top3.map((participant, index) => (
                 <LeaderboardItem
                   key={`${participant.name}-top-${index}`}
-                  rank={index + 1}
+                  rank={index +1}
                   name={participant.name}
                   score={participant.score}
                   teamMembers={participant.teamMembers}
