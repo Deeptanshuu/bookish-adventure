@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 import {
   Box,
   Text,
@@ -22,6 +22,7 @@ import {
 } from '@chakra-ui/react';
 import Header from './Header.jsx';
 import './App.css';
+import data from './FINAL-LIST.json';
 
 const LeaderBoard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -33,29 +34,63 @@ const LeaderBoard = () => {
   const borderColor = useColorModeValue('#ff6600', '#ff6600');
 
   useEffect(() => {
-    const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
-    const socket = io(`${apiEndpoint}`);
-    socket.on('connect', () => {
-      console.log('Connected to WebSocket server');
-    });
-    socket.on('leaderboard_update', (data) => {
-      const sortedLeaderboard = data
-        .map((team) => ({
-          name: team.team_name,
-          score: team.score,
-          teamMembers: team.team_members.map((member) => ({ name: member.name })),
-          easySolved: team.problems_solved.easy || 0,
-          mediumSolved: team.problems_solved.medium || 0,
-          hardSolved: team.problems_solved.hard || 0,
-          githubUsername: team.github_username,
-        }))
-        .sort((a, b) => b.score - a.score);
+    // const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+    // const socket = io(`${apiEndpoint}`);
+    // socket.on('connect', () => {
+    //   console.log('Connected to WebSocket server');
+    // });
+    // socket.on('leaderboard_update', (data) => {
+    //   const sortedLeaderboard = data
+    //     .map((team) => ({
+    //       name: team.team_name,
+    //       score: team.score,
+    //       teamMembers: team.team_members.map((member) => ({ name: member.name })),
+    //       easySolved: team.problems_solved.easy || 0,
+    //       mediumSolved: team.problems_solved.medium || 0,
+    //       hardSolved: team.problems_solved.hard || 0,
+    //       githubUsername: team.github_username,
+    //     }))
+    //     .sort((a, b) => b.score - a.score);
 
-      setLeaderboard(sortedLeaderboard);
+    //   setLeaderboard(sortedLeaderboard);
+    // });
+    // return () => {
+    //   socket.disconnect();
+    // };
+    
+
+    const updatedLeaderboard = data.map(team => {
+      // Calculate the score based on hard problems solved (7 points per hard problem)
+      const hardProblemScore = (team.problems_solved.hard || 0) * 7;
+    
+      // Apply penalty logic: if penalty is negative, it's treated as a bonus (positive)
+      const adjustedPenalty = team.penalty < 0 ? Math.abs(team.penalty) : team.penalty;
+    
+      // Add hard problem score and adjust the final score
+      const totalScore = hardProblemScore + (team.score || 0) + adjustedPenalty;
+    
+      // Return updated team object
+      return {
+        ...team,
+        totalScore, // Add the calculated total score
+      };
     });
-    return () => {
-      socket.disconnect();
-    };
+    
+    // Sort by total score
+    const sortedLeaderboard = updatedLeaderboard
+      .map(team => ({
+        name: team.team_name,
+        score: team.totalScore, // Use the new total score
+        teamMembers: team.team_members.map(member => ({ name: member.name })),
+        easySolved: team.problems_solved.easy || 0,
+        mediumSolved: team.problems_solved.medium || 0,
+        hardSolved: team.problems_solved.hard || 0,
+        githubUsername: team.github_username,
+      }))
+      .sort((a, b) => b.score - a.score); // Sort by score in descending order
+    
+    setLeaderboard(sortedLeaderboard);
+
   }, []);
 
   const LeaderboardItem = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved, githubUsername, isBottomThree }) => {

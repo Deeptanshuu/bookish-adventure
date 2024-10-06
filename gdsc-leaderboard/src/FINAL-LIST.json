@@ -1,0 +1,349 @@
+[{
+  "_id": {
+    "$oid": "670039b2717a81811318033e"
+  },
+  "team_name": "Pixel Coders",
+  "team_members": [
+    {
+      "name": "Shib Sobhan Mohanty"
+    },
+    {
+      "name": "Amal Nair"
+    },
+    {
+      "name": "Dharsini Guruprasath"
+    }
+  ],
+  "problems_solved": {
+    "hard": 3
+  },
+  "disqualified": false,
+  "penalty": -3,
+  "github_username": "gitshib123"
+},
+{
+  "_id": {
+    "$oid": "67003a3b717a818113180342"
+  },
+  "team_name": "Pseudo Coders",
+  "team_members": [
+    {
+      "name": "Ojasvi Doye"
+    },
+    {
+      "name": "Maitri Dalvi"
+    },
+    {
+      "name": "Harshika Patil"
+    },
+    {
+      "name": "Abhay Dandge"
+    }
+  ],
+  "problems_solved": {
+    "hard": 0
+  },
+  "disqualified": true,
+  "penalty": 0,
+  "github_username": "ojasvi004"
+},
+{
+  "_id": {
+    "$oid": "67003aa3717a818113180345"
+  },
+  "team_name": "Karasuno",
+  "team_members": [
+    {
+      "name": "Aryan Ghate"
+    },
+    {
+      "name": "Saniya Quraishi"
+    }
+  ],
+  "problems_solved": {
+    "hard": 3
+  },
+  "disqualified": false,
+  "penalty": -6,
+  "github_username": "ovenpickled"
+},
+{
+  "_id": {
+    "$oid": "67003ab3717a818113180346"
+  },
+  "team_name": "Bit by Bit",
+  "team_members": [
+    {
+      "name": "Jatin Pathak"
+    },
+    {
+      "name": "Varun Raj"
+    },
+    {
+      "name": "Jignesh Parmar"
+    },
+    {
+      "name": "Yash Mishra"
+    }
+  ],
+  "problems_solved": {
+    "hard": 6
+  },
+  "disqualified": false,
+  "penalty": -6,
+  "github_username": "pathakjatin"
+},
+{
+  "_id": {
+    "$oid": "67003ac1717a818113180347"
+  },
+  "team_name": "Code Bots",
+  "team_members": [
+    {
+      "name": "Advik Sexana"
+    },
+    {
+      "name": "Ebadur Rehman Shaikh"
+    },
+    {
+      "name": "Anjali Singh"
+    },
+    {
+      "name": "Om Prabhu"
+    }
+  ],
+  "problems_solved": {
+    "hard": 5
+  },
+  "disqualified": false,
+  "penalty": -6,
+  "github_username": "AdvikSaxena1"
+},
+{
+  "_id": {
+    "$oid": "67003b00717a818113180349"
+  },
+  "team_name": "Chintu Coders",
+  "team_members": [
+    {
+      "name": "Rudra Patel"
+    },
+    {
+      "name": "Suraj Sinha"
+    },
+    {
+      "name": "Arpita Prasad"
+    },
+    {
+      "name": "Akshay Kotekar"
+    }
+  ],
+  "problems_solved": {
+    "hard": 0
+  },
+  "disqualified": true,
+  "penalty": 0,
+  "github_username": "Rudra-121106"
+},
+{
+  "_id": {
+    "$oid": "67003e54717a81811318034c"
+  },
+  "team_name": "Tech Titans (3)",
+  "team_members": [
+    {
+      "name": "Dhruv Jasathy"
+    },
+    {
+      "name": "Dhruv Diwate"
+    },
+    {
+      "name": "Yash Rohit"
+    },
+    {
+      "name": "Haider Raza"
+    }
+  ],
+  "problems_solved": {
+    "hard": 0
+  },
+  "disqualified": true,
+  "penalty": 3,
+  "github_username": "Xstroke1820"
+},
+{
+  "_id": {
+    "$oid": "67003e59717a81811318034d"
+  },
+  "team_name": "Techspire",
+  "team_members": [
+    {
+      "name": "Farid Khan"
+    },
+    {
+      "name": "Khan Mohd Aatif Mohd Kasim"
+    },
+    {
+      "name": "Khan Yahya Nasim"
+    },
+    {
+      "name": "Zaid Shah Ali"
+    }
+  ],
+  "problems_solved": {
+    "hard": 0
+  },
+  "disqualified": true,
+  "penalty": 0,
+  "github_username": "Farid5G"
+},
+{
+  "_id": {
+    "$oid": "67003fa2717a818113180350"
+  },
+  "team_name": "404NotFound",
+  "team_members": [
+    {
+      "name": "Manthan Singh Chauhan"
+    },
+    {
+      "name": "Aarya Singh"
+    },
+    {
+      "name": "Sanjit Kore"
+    },
+    {
+      "name": "Priti Maind"
+    }
+  ],
+  "problems_solved": {
+    "hard": 4
+  },
+  "disqualified": false,
+  "penalty": -6,
+  "github_username": "Manthan2006-tech"
+},
+{
+  "_id": {
+    "$oid": "67004046717a818113180356"
+  },
+  "team_name": "Blaze",
+  "team_members": [
+    {
+      "name": "Pratham Vishwakarma"
+    },
+    {
+      "name": "Sunny Pathak"
+    }
+  ],
+  "problems_solved": {
+    "hard": 3
+  },
+  "disqualified": false,
+  "penalty": -3,
+  "github_username": "Pratham-Vishwakarma"
+},
+{
+  "_id": {
+    "$oid": "67004182717a818113180358"
+  },
+  "team_name": "Error404",
+  "team_members": [
+    {
+      "name": "Siddhen Pise"
+    },
+    {
+      "name": "Niya Johnson"
+    },
+    {
+      "name": "Maanvi Shadakshari"
+    },
+    {
+      "name": "Krish Pinto"
+    }
+  ],
+  "problems_solved": {
+    "hard": 4
+  },
+  "disqualified": false,
+  "penalty": -6,
+  "github_username": "sidd4114"
+},
+{
+  "_id": {
+    "$oid": "6700d8bf92e855cd25157427"
+  },
+  "team_name": "Pacmen",
+  "team_members": [
+    {
+      "name": "Sanchit Gade"
+    },
+    {
+      "name": "Ruchik Panwal"
+    },
+    {
+      "name": "Tejas Prajapati"
+    },
+    {
+      "name": "Sumit Devrupkar"
+    }
+  ],
+  "problems_solved": {
+    "hard": 3
+  },
+  "disqualified": false,
+  "penalty": 0,
+  "github_username": "SanchitGade"
+},
+{
+  "_id": {
+    "$oid": "6700daeb92e855cd25157428"
+  },
+  "team_name": "Tech Titans (1)",
+  "team_members": [
+    {
+      "name": "Ayush Yadav"
+    },
+    {
+      "name": "Yeshwant Lingam"
+    },
+    {
+      "name": "Niraj Nagaonkar"
+    },
+    {
+      "name": "Harshjeet Madhavi"
+    }
+  ],
+  "problems_solved": {
+    "hard": 0
+  },
+  "github_username": "ayushyadav092005",
+  "disqualified": true,
+  "penalty": 0
+},
+{
+  "_id": {
+    "$oid": "6700403f717a818113180355"
+  },
+  "team_name": "Gennady Korotkevich's Disciples",
+  "team_members": [
+    {
+      "name": "Shreyas Andurlekar"
+    },
+    {
+      "name": "Purvesh Desai"
+    },
+    {
+      "name": "Vishal Jadhav"
+    },
+    {
+      "name": "Devam Desai"
+    }
+  ],
+  "problems_solved": {
+    "hard": 8
+  },
+  "disqualified": false,
+  "penalty": -9,
+  "github_username": "ShreyasAndurlekar"
+}]
