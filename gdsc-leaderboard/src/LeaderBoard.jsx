@@ -64,10 +64,10 @@ const LeaderBoard = () => {
       const hardProblemScore = (team.problems_solved.hard || 0) * 7;
     
       // Apply penalty logic: if penalty is negative, it's treated as a bonus (positive)
-      const adjustedPenalty = team.penalty < 0 ? Math.abs(team.penalty) : team.penalty;
-    
+      const adjustedPenalty = team.penalty 
+
       // Add hard problem score and adjust the final score
-      const totalScore = hardProblemScore + (team.score || 0) + adjustedPenalty;
+      const totalScore = hardProblemScore + (team.score || 0) - adjustedPenalty;
     
       // Return updated team object
       return {
