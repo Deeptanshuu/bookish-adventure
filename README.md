@@ -10,7 +10,12 @@ The GDSC Leaderboard tracks GitHub activities in real-time, displaying member co
 
 Here's a visual overview of the GDSC Leaderboard system:
 
-[//]: # (Add your images to the /docs/images directory and update the paths below)
+![image](https://github.com/user-attachments/assets/6117a5c5-78a0-42fa-b7a7-db23c0189009)
+![image](https://github.com/user-attachments/assets/e1befd12-0ef3-42ec-97fd-33defd0306f5)
+
+![image](https://github.com/user-attachments/assets/c6c367b5-986b-4a09-aa12-3af223f0f9da)
+![image](https://github.com/user-attachments/assets/ee40640e-3a32-45d9-a8d2-181abfa544f6)
+
 
 ### Application Screenshots
 1. Main Leaderboard Interface
