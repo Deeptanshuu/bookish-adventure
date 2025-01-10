@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useToast } from '@chakra-ui/react';
 import {
   Box,
   Text,
@@ -33,60 +35,110 @@ const App = () => {
   const hoverBgColor = useColorModeValue('gray.200', 'gray.800');
   const textColor = useColorModeValue('black', 'gray.100');
   const titleTextColor = useColorModeValue('white', 'black');
+  const toast = useToast();
+  const prevLeaderboardRef = useRef();
 
   useEffect(() => {
-    // const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
-    // const socket = io(`${apiEndpoint}`);
-    // socket.on('connect', () => {
-    //   console.log('Connected to WebSocket server');
-    // });
-    // socket.on('leaderboard_update', (data) => {
-    //   const sortedLeaderboard = data
-    //     .map((team) => ({
-    //       name: team.team_name,
-    //       score: team.score,
-    //       teamMembers: team.team_members.map((member) => ({ name: member.name })),
-    //       easySolved: team.problems_solved.easy || 0,
-    //       mediumSolved: team.problems_solved.medium || 0,
-    //       hardSolved: team.problems_solved.hard || 0,
-    //       githubUsername: team.github_username,
-    //     }))
-    //     .sort((a, b) => b.score - a.score)
-    //     .map((team, index) => ({
-    //       ...team,
-    //       rank: index + 1, // Assign rank based on the sorted leaderboard
-    //     }));
+    const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+    const socket = io(`${apiEndpoint}`);
 
-    //   setLeaderboard(sortedLeaderboard);
-    // });
-    // return () => {
-    //   socket.disconnect();
-    // };
-
-    const updatedLeaderboard = data.map(team => {
-      // Calculate the score based on hard problems solved (7 points per hard problem)
-      const hardProblemScore = (team.problems_solved.hard || 0) * 7;
-
-      // Apply penalty logic: if penalty is negative, it's treated as a bonus (positive)
-      const adjustedPenalty = team.penalty 
-
-      // Add hard problem score and adjust the final score
-      const totalScore = hardProblemScore + (team.score || 0) - adjustedPenalty;
-
-      // Return updated team object
-      return {
-        ...team,
-        totalScore, // Add the calculated total score
-      };
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server');
     });
 
-    // Sort by total score
-    const sortedLeaderboard = updatedLeaderboard
-      //.filter(team => team.disqualified === false)
-      .map(team => ({
+    socket.on('leaderboard_update', (data) => {
+      const sortedLeaderboard = processLeaderboardData(data);
+
+      if (prevLeaderboardRef.current) {
+        const rankChanges = findRankChanges(prevLeaderboardRef.current, sortedLeaderboard);
+        //showRankChangeToasts(rankChanges);
+      }
+
+      setLeaderboard(sortedLeaderboard);
+      prevLeaderboardRef.current = sortedLeaderboard;
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+
+  // useEffect(() => {
+  //   const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+  //   const socket = io(`${apiEndpoint}`);
+  //   socket.on('connect', () => {
+  //     console.log('Connected to WebSocket server');
+  //   });
+  //   socket.on('leaderboard_update', (data) => {
+  //     const sortedLeaderboard = data
+  //       .map((team) => ({
+  //         name: team.team_name,
+  //         score: team.score,
+  //         teamMembers: team.team_members.map((member) => ({ name: member.name })),
+  //         easySolved: team.problems_solved.easy || 0,
+  //         mediumSolved: team.problems_solved.medium || 0,
+  //         hardSolved: team.problems_solved.hard || 0,
+  //         githubUsername: team.github_username,
+  //       }))
+  //       .sort((a, b) => b.score - a.score)
+  //       .map((team, index) => ({
+  //         ...team,
+  //         rank: index + 1, // Assign rank based on the sorted leaderboard
+  //       }));
+
+  //     setLeaderboard(sortedLeaderboard);
+  //   });
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+
+  // const updatedLeaderboard = data.map(team => {
+  //   // Calculate the score based on hard problems solved (7 points per hard problem)
+  //   const hardProblemScore = (team.problems_solved.hard || 0) * 7;
+
+  //   // Apply penalty logic: if penalty is negative, it's treated as a bonus (positive)
+  //   const adjustedPenalty = team.penalty 
+
+  //   // Add hard problem score and adjust the final score
+  //   const totalScore = hardProblemScore + (team.score || 0) - adjustedPenalty;
+
+  //   // Return updated team object
+  //   return {
+  //     ...team,
+  //     totalScore, // Add the calculated total score
+  //   };
+  // });
+
+  // // Sort by total score
+  // const sortedLeaderboard = updatedLeaderboard
+  //   //.filter(team => team.disqualified === false)
+  //   .map(team => ({
+  //     name: team.team_name,
+  //     score: team.totalScore, // Use the new total score
+  //     teamMembers: team.team_members.map(member => ({ name: member.name })),
+  //     easySolved: team.problems_solved.easy || 0,
+  //     mediumSolved: team.problems_solved.medium || 0,
+  //     hardSolved: team.problems_solved.hard || 0,
+  //     githubUsername: team.github_username,
+  //   }))
+  //   .sort((a, b) => b.score - a.score)
+  //   .map((team, index) => ({
+  //     ...team,
+  //     rank: index + 1,
+  //   }));
+
+  // setLeaderboard(sortedLeaderboard);
+
+  // }, []);
+
+
+  const processLeaderboardData = (data) => {
+    return data
+      .map((team) => ({
         name: team.team_name,
-        score: team.totalScore, // Use the new total score
-        teamMembers: team.team_members.map(member => ({ name: member.name })),
+        score: team.score,
+        teamMembers: team.team_members.map((member) => ({ name: member.name })),
         easySolved: team.problems_solved.easy || 0,
         mediumSolved: team.problems_solved.medium || 0,
         hardSolved: team.problems_solved.hard || 0,
@@ -97,10 +149,38 @@ const App = () => {
         ...team,
         rank: index + 1,
       }));
+  };
 
-    setLeaderboard(sortedLeaderboard);
+  const findRankChanges = (prevLeaderboard, newLeaderboard) => {
+    return newLeaderboard.map(newTeam => {
+      const prevTeam = prevLeaderboard.find(team => team.name === newTeam.name);
+      if (prevTeam && prevTeam.rank !== newTeam.rank) {
+        return {
+          name: newTeam.name,
+          prevRank: prevTeam.rank,
+          newRank: newTeam.rank
+        };
+      }
+      return null;
+    }).filter(Boolean);
+  };
 
-  }, []);
+  // const showRankChangeToasts = (rankChanges) => {
+  //   rankChanges.forEach(change => {
+  //     const rankDiff = change.prevRank - change.newRank;
+  //     const status = rankDiff > 0 ? 'success' : 'warning';
+  //     const title = rankDiff > 0 ? 'Rank Improved!' : 'Rank Decreased';
+  //     const description = `${change.name} moved from rank ${change.prevRank} to ${change.newRank}`;
+
+  //     toast({
+  //       title,
+  //       description,
+  //       status,
+  //       duration: 3000,
+  //       isClosable: true,
+  //     });
+  //   });
+  // };
 
   const filteredLeaderboard = leaderboard.filter((team) => {
     const nameMatches = team.name?.toLowerCase().includes(searchQuery.toLowerCase());
@@ -111,7 +191,6 @@ const App = () => {
 
     return nameMatches || memberMatches || githubUsernameMatches;
   });
-
 
   const LeaderboardItem = ({ rank, name, score, teamMembers, easySolved, mediumSolved, hardSolved, githubUsername }) => {
     const badgeColor = (() => {
@@ -126,6 +205,8 @@ const App = () => {
           return 'blue'; // Blue for other ranks
       }
     })();
+
+    const AnimatedScore = motion(Text);
 
     const badgeBgColor = useColorModeValue(
       badgeColor === 'blue' ? 'transparent' : `${badgeColor}.100`,
@@ -164,9 +245,16 @@ const App = () => {
                   <Avatar name={member.name} key={index} />
                 ))}
               </AvatarGroup>
-              <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="semibold" color={textColor} ml={5} mr={8}>
+              <AnimatedScore
+                fontSize={{ base: 'lg', md: 'xl' }}
+                fontWeight="semibold"
+                color={textColor}
+                ml={5}
+                mr={8}
+                animate={{ score }}
+              >
                 Score: {score}
-              </Text>
+              </AnimatedScore>
             </Flex>
           </Flex>
           <AccordionIcon />
@@ -277,19 +365,34 @@ const App = () => {
               />
             </Flex>
             <Accordion allowMultiple>
-              {filteredLeaderboard.map((team, index) => (
-                <LeaderboardItem
-                  key={index}
-                  rank={team.rank}
-                  name={team.name}
-                  score={team.score}
-                  teamMembers={team.teamMembers}
-                  easySolved={team.easySolved}
-                  mediumSolved={team.mediumSolved}
-                  hardSolved={team.hardSolved}
-                  githubUsername={team.githubUsername}
-                />
-              ))}
+              <AnimatePresence>
+                {filteredLeaderboard.map((team) => (
+                  <motion.div
+                    key={team.name}
+                    layout
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -50 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 50,
+                      mass: 1,
+                    }}
+                  >
+                    <LeaderboardItem
+                      rank={team.rank}
+                      name={team.name}
+                      score={team.score}
+                      teamMembers={team.teamMembers}
+                      easySolved={team.easySolved}
+                      mediumSolved={team.mediumSolved}
+                      hardSolved={team.hardSolved}
+                      githubUsername={team.githubUsername}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </Accordion>
           </Box>
         </Box>
@@ -297,5 +400,6 @@ const App = () => {
     </>
   );
 };
+
 
 export default App;
