@@ -8,8 +8,6 @@ The GDSC Leaderboard tracks GitHub activities in real-time, displaying member co
 
 ## Project Gallery
 
-Here's a visual overview of the GDSC Leaderboard system:
-
 ![image](https://github.com/user-attachments/assets/6117a5c5-78a0-42fa-b7a7-db23c0189009)
 ![image](https://github.com/user-attachments/assets/e1befd12-0ef3-42ec-97fd-33defd0306f5)
 
@@ -34,8 +32,6 @@ Here's a visual overview of the GDSC Leaderboard system:
 1. Ngrok Configuration
 2. GitHub Webhook Setup
 3. Testing Results
-
-[Add your screenshots and diagrams here with descriptions]
 
 ## Project Structure
 
