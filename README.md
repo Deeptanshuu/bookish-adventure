@@ -1,6 +1,6 @@
 ﻿# GDSC Leaderboard
 
-A real-time leaderboard application for tracking and displaying GitHub contributions from GDSC members. Built with Node.js and React, this application provides live updates of member activities and contributions using WebSocket technology.
+A real-time leaderboard application for tracking and displaying GitHub contributions from participants. Built with Node.js and React, this application provides live updates of member activities and contributions using WebSocket technology.
 
 ## Overview
 
