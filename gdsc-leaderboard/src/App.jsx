@@ -35,33 +35,54 @@ const App = () => {
   const hoverBgColor = useColorModeValue('gray.200', 'gray.800');
   const textColor = useColorModeValue('black', 'gray.100');
   const titleTextColor = useColorModeValue('white', 'black');
-  const toast = useToast();
-  const prevLeaderboardRef = useRef();
+  // const toast = useToast();
+  // const prevLeaderboardRef = useRef();
 
   useEffect(() => {
-    const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
-    const socket = io(`${apiEndpoint}`);
-
-    socket.on('connect', () => {
-      console.log('Connected to WebSocket server');
-    });
-
-    socket.on('leaderboard_update', (data) => {
-      const sortedLeaderboard = processLeaderboardData(data);
-
-      if (prevLeaderboardRef.current) {
-        const rankChanges = findRankChanges(prevLeaderboardRef.current, sortedLeaderboard);
-        //showRankChangeToasts(rankChanges);
-      }
-
-      setLeaderboard(sortedLeaderboard);
-      prevLeaderboardRef.current = sortedLeaderboard;
-    });
-
-    return () => {
-      socket.disconnect();
-    };
+    setLeaderboard(data);
+    const sortedLeaderboard = data
+      .map((team) => ({
+        name: team.team_name,
+        score: (team.problems_solved.hard || 0) * 7 + (team.score || 0) - (team.penalty || 0),
+        teamMembers: team.team_members.map((member) => ({ name: member.name })),
+        easySolved: team.problems_solved.easy || 0,
+        mediumSolved: team.problems_solved.medium || 0,
+        hardSolved: team.problems_solved.hard || 0,
+        githubUsername: team.github_username,
+      }))
+        .sort((a, b) => b.score - a.score)
+        .map((team, index) => ({
+          ...team,
+          rank: index + 1, // Assign rank based on the sorted leaderboard
+        }));
+    console.log(sortedLeaderboard);
+    setLeaderboard(sortedLeaderboard);
   }, []);
+
+  // useEffect(() => {
+  //   const apiEndpoint = import.meta.env.VITE_API_ENDPOINT;
+  //   const socket = io(`${apiEndpoint}`);
+
+  //   socket.on('connect', () => {
+  //     console.log('Connected to WebSocket server');
+  //   });
+
+  //   socket.on('leaderboard_update', (data) => {
+  //     const sortedLeaderboard = processLeaderboardData(data);
+
+  //     if (prevLeaderboardRef.current) {
+  //       const rankChanges = findRankChanges(prevLeaderboardRef.current, sortedLeaderboard);
+  //       //showRankChangeToasts(rankChanges);
+  //     }
+
+  //     setLeaderboard(sortedLeaderboard);
+  //     prevLeaderboardRef.current = sortedLeaderboard;
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
 
   // useEffect(() => {
